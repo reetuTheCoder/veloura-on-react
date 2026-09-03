@@ -1,0 +1,66 @@
+.room-tabs {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.room-tabs .btn {
+  padding: 10px 24px;
+  background: #f0f0f0;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s;
+}
+
+.room-tabs .btn.active {
+  background: #1a1a1a;
+  color: white;
+}
+
+.room-tabs .btn:hover:not(.active) {
+  background: #ddd;
+}
+
+.room-card {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  background: white;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+.room-card .room-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  min-height: 300px;
+}
+
+.room-card .room-info {
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.room-card .room-info h3 {
+  font-size: 28px;
+  font-weight: 400;
+  margin-bottom: 15px;
+}
+
+.room-card .room-info p {
+  color: #666;
+  line-height: 1.8;
+  margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+  .room-card {
+    grid-template-columns: 1fr;
+  }
+}
