@@ -1,0 +1,39 @@
+/* MagicChat Custom Styles */
+.magic-chat-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9999;
+}
+
+/* Override MagicChat default styles if needed */
+.magic-chat-container .chat-window {
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+.magic-chat-container .chat-toggle {
+  background: #b89b6b;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  font-size: 24px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s;
+}
+
+.magic-chat-container .chat-toggle:hover {
+  transform: scale(1.05);
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .magic-chat-container .chat-toggle {
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
+  }
+}

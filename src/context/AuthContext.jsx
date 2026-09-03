@@ -1,5 +1,6 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import api from '../services/api';
+import magicChatService from '../services/magicChat';
 
 const AuthContext = createContext();
 
@@ -20,19 +21,38 @@ export const AuthProvider = ({ children }) => {
     if (token) {
       loadUser();
     } else {
+      // Initialize MagicChat without user
+      initializeMagicChat(null);
       setLoading(false);
     }
   }, [token]);
 
+  const initializeMagicChat = async (userData) => {
+    try {
+      if (userData && userData.id) {
+        await magicChatService.initializeWithUser(userData);
+      } else {
+        await magicChatService.initialize();
+      }
+    } catch (error) {
+      console.error('Failed to initialize MagicChat:', error);
+    }
+  };
+
   const loadUser = async () => {
     try {
       const response = await api.get('/auth/profile');
-      setUser(response.data);
+      const userData = response.data;
+      setUser(userData);
+      // Initialize MagicChat with user
+      await initializeMagicChat(userData);
     } catch (error) {
       console.error('Failed to load user:', error);
       localStorage.removeItem('token');
       setToken(null);
       setUser(null);
+      // Initialize MagicChat without user
+      await initializeMagicChat(null);
     } finally {
       setLoading(false);
     }
@@ -46,6 +66,8 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem('user', JSON.stringify(user));
       setToken(token);
       setUser(user);
+      // Initialize MagicChat with logged-in user
+      await initializeMagicChat(user);
       return { success: true, user };
     } catch (error) {
       return {
@@ -63,6 +85,8 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem('user', JSON.stringify(user));
       setToken(token);
       setUser(user);
+      // Initialize MagicChat with registered user
+      await initializeMagicChat(user);
       return { success: true, user };
     } catch (error) {
       return {
@@ -73,14 +97,18 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
+    // Logout from MagicChat
+    magicChatService.logout();
+    
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     setToken(null);
     setUser(null);
-    // Optional: Call magicchat logout if available
-    if (window.magicchat_io?.logout) {
-      window.magicchat_io.logout();
-    }
+    
+    // Re-initialize MagicChat without user
+    setTimeout(async () => {
+      await initializeMagicChat(null);
+    }, 100);
   };
 
   const value = {
