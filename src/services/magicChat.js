@@ -37,11 +37,11 @@ class MagicChatService {
       // Load the script if not loaded
       await this.loadScript();
 
-      // Wait for window.magicchat_io to be available
+      // Wait for window.sageion_os to be available
       await this.waitForMagicChat();
 
       // Set up the chat
-      await window.magicchat_io.setUp(
+      await window.sageion_os.setUp(
         API_CONFIG.APP_NAME,
         API_CONFIG.API_KEY,
         API_CONFIG.REGION,
@@ -52,9 +52,9 @@ class MagicChatService {
 
       // Initialize with user ID if provided
       if (userId) {
-        await window.magicchat_io.initialize({ uid: userId.toString() });
+        await window.sageion_os.initialize({ uid: userId.toString() });
       } else {
-        await window.magicchat_io.initialize();
+        await window.sageion_os.initialize();
       }
 
       this.initialized = true;
@@ -66,12 +66,12 @@ class MagicChatService {
     }
   }
 
-  // Wait for window.magicchat_io to be available
+  // Wait for window.sageion_os to be available
   waitForMagicChat(timeout = 10000) {
     return new Promise((resolve, reject) => {
       const startTime = Date.now();
       const checkInterval = setInterval(() => {
-        if (window.magicchat_io) {
+        if (window.sageion_os) {
           clearInterval(checkInterval);
           resolve();
         } else if (Date.now() - startTime > timeout) {
@@ -92,15 +92,15 @@ class MagicChatService {
 
   // Logout user from chat
   logout() {
-    if (window.magicchat_io?.logout) {
-      window.magicchat_io.logout();
+    if (window.sageion_os?.logout) {
+      window.sageion_os.logout();
       console.log('✅ MagicChat logout successful');
     }
   }
 
   // Check if MagicChat is initialized
   isInitialized() {
-    return this.initialized && window.magicchat_io;
+    return this.initialized && window.sageion_os;
   }
 }
 
