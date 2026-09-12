@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './styles/App.css';
 import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
-import MagicChatWrapper from './components/MagicChatWrapper';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Home from './pages/Home';
@@ -21,7 +20,6 @@ import Profile from './pages/Profile';
 function App() {
   return (
     <AuthProvider>
-      <MagicChatWrapper>
         <Router>
           <div className="App">
             <Header />
@@ -47,7 +45,6 @@ function App() {
             <Footer />
           </div>
         </Router>
-      </MagicChatWrapper>
     </AuthProvider>
   );
 }
