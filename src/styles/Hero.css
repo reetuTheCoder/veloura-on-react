@@ -76,7 +76,7 @@
 
 .slide-controls {
   position: absolute;
-  right: 40px;
+  right: 50%;
   bottom: 40px;
   display: flex;
   align-items: center;
@@ -110,15 +110,18 @@
   .hero-content h1 {
     font-size: 32px;
   }
+
   .slide-controls {
-    right: 20px;
+    right: 40%;
     bottom: 20px;
     gap: 8px;
   }
+
   .slide-dot {
     width: 8px;
     height: 8px;
   }
+
   .slide-dot.active {
     width: 24px;
   }

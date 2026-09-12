@@ -1,3 +1,7 @@
+/* =========================================================
+   BASE (desktop-first) — your original styles, unchanged
+   ========================================================= */
+
 .split-layout {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -8,6 +12,8 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  /* NEW: remove inline-img whitespace gap */
+  display: block;
 }
 
 .split-layout .split-content {
@@ -16,6 +22,8 @@
   flex-direction: column;
   justify-content: center;
   background: #fafafa;
+  /* NEW: prevent content overflow on narrow columns */
+  min-width: 0;
 }
 
 .split-layout .split-content h2 {
@@ -30,8 +38,169 @@
   margin-bottom: 30px;
 }
 
+/* =========================================================
+   RESPONSIVE — Large tablet (≤ 1200px)
+   Slightly tighter padding so text doesn't feel cramped
+   ========================================================= */
+@media (max-width: 1200px) {
+  .split-layout .split-content {
+    padding: 50px 40px;
+  }
+
+  .split-layout .split-content h2 {
+    font-size: 28px;
+  }
+
+  .split-layout .split-content p {
+    font-size: 15px;
+    line-height: 1.75;
+  }
+}
+
+/* =========================================================
+   RESPONSIVE — Tablet (≤ 992px)
+   Still 2 columns but tighter; image taller
+   ========================================================= */
+@media (max-width: 992px) {
+  .split-layout {
+    min-height: 360px;
+  }
+
+  .split-layout .split-content {
+    padding: 40px 32px;
+  }
+
+  .split-layout .split-content h2 {
+    font-size: 26px;
+    margin-bottom: 16px;
+  }
+
+  .split-layout .split-content p {
+    font-size: 15px;
+    line-height: 1.7;
+    margin-bottom: 24px;
+  }
+}
+
+/* =========================================================
+   RESPONSIVE — Small tablet / large phone (≤ 768px)
+   Your existing stack breakpoint, refined
+   ========================================================= */
 @media (max-width: 768px) {
   .split-layout {
     grid-template-columns: 1fr;
+    min-height: 0;
+  }
+
+  .split-layout .split-image {
+    /* Give the image container a fixed height when stacked */
+    height: 320px;
+    overflow: hidden;
+  }
+
+  .split-layout .split-image img {
+    height: 100%;
+    width: 100%;
+  }
+
+  .split-layout .split-content {
+    padding: 40px 28px;
+  }
+
+  .split-layout .split-content h2 {
+    font-size: 24px;
+    margin-bottom: 14px;
+  }
+
+  .split-layout .split-content p {
+    font-size: 15px;
+    line-height: 1.7;
+    margin-bottom: 22px;
+  }
+}
+
+/* =========================================================
+   RESPONSIVE — Small phones (≤ 480px)
+   ========================================================= */
+@media (max-width: 480px) {
+  .split-layout .split-image {
+    height: 240px;
+  }
+
+  .split-layout .split-content {
+    padding: 30px 20px;
+  }
+
+  .split-layout .split-content h2 {
+    font-size: 20px;
+    margin-bottom: 12px;
+    line-height: 1.3;
+  }
+
+  .split-layout .split-content p {
+    font-size: 14px;
+    line-height: 1.65;
+    margin-bottom: 18px;
+  }
+}
+
+/* =========================================================
+   RESPONSIVE — Extra small phones (≤ 360px)
+   ========================================================= */
+@media (max-width: 360px) {
+  .split-layout .split-image {
+    height: 200px;
+  }
+
+  .split-layout .split-content {
+    padding: 24px 16px;
+  }
+
+  .split-layout .split-content h2 {
+    font-size: 18px;
+  }
+
+  .split-layout .split-content p {
+    font-size: 13px;
+  }
+}
+
+/* =========================================================
+   RESPONSIVE — Landscape phones (short height)
+   Prevent tall image from pushing content off-screen
+   ========================================================= */
+@media (max-height: 480px) and (max-width: 992px) {
+  .split-layout {
+    min-height: 0;
+  }
+
+  .split-layout .split-image {
+    height: 180px;
+  }
+
+  .split-layout .split-content {
+    padding: 24px 20px;
+  }
+
+  .split-layout .split-content h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+
+  .split-layout .split-content p {
+    font-size: 14px;
+    line-height: 1.55;
+    margin-bottom: 16px;
+  }
+}
+
+/* =========================================================
+   ACCESSIBILITY — reduced motion
+   ========================================================= */
+@media (prefers-reduced-motion: reduce) {
+  .split-layout,
+  .split-layout .split-image img,
+  .split-layout .split-content {
+    transition: none;
   }
 }

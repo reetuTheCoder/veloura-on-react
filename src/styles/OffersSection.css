@@ -1,3 +1,7 @@
+/* =========================================================
+   BASE (desktop-first) — your original styles, unchanged
+   ========================================================= */
+
 .offers-slider {
   position: relative;
   display: flex;
@@ -5,6 +9,10 @@
   justify-content: center;
   max-width: 900px;
   margin: 0 auto;
+  /* NEW: prevent horizontal overflow + add breathing room for nav buttons */
+  width: 100%;
+  padding: 0 70px;
+  box-sizing: border-box;
 }
 
 .slider-nav {
@@ -21,6 +29,12 @@
   font-size: 24px;
   z-index: 10;
   transition: background 0.3s;
+  /* NEW: center the glyph properly */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  padding: 0;
 }
 
 .slider-nav:hover {
@@ -43,12 +57,16 @@
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
   overflow: hidden;
   width: 100%;
+  /* NEW: allow grid children to shrink */
+  min-width: 0;
 }
 
 .offer-card .offer-image img {
   width: 100%;
   height: 300px;
   object-fit: cover;
+  /* NEW */
+  display: block;
 }
 
 .offer-card .offer-info {
@@ -56,6 +74,8 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  /* NEW: prevent overflow with long text */
+  min-width: 0;
 }
 
 .offer-card .offer-info h3 {
@@ -85,6 +105,7 @@
   border: none;
   cursor: pointer;
   transition: all 0.3s;
+  padding: 0;
 }
 
 .slider-dot.active {
@@ -93,19 +114,219 @@
   border-radius: 4px;
 }
 
-@media (max-width: 768px) {
+/* =========================================================
+   RESPONSIVE — Tablet (≤ 992px)
+   Buttons move inside the slider bounds, still centered
+   ========================================================= */
+@media (max-width: 992px) {
+  .offers-slider {
+    padding: 0 50px;
+  }
+
   .slider-nav.prev {
-    left: 10px;
+    left: 0;
+  }
+
+  .slider-nav.next {
+    right: 0;
+  }
+
+  .offer-card {
+    gap: 24px;
+  }
+
+  .offer-card .offer-image img {
+    height: 280px;
+  }
+
+  .offer-card .offer-info {
+    padding: 24px;
+  }
+
+  .offer-card .offer-info h3 {
+    font-size: 22px;
+  }
+}
+
+/* =========================================================
+   RESPONSIVE — Small tablet / large phone (≤ 768px)
+   Card stacks, BUT nav buttons stay centered on the IMAGE
+   ========================================================= */
+@media (max-width: 768px) {
+  .offers-slider {
+    padding: 0 44px;
+  }
+
+  .slider-nav {
+    width: 36px;
+    height: 36px;
+    font-size: 20px;
+    /* keep vertical centering */
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .slider-nav.prev {
+    left: 4px;
   }
   .slider-nav.next {
-    right: 10px;
+    right: 4px;
   }
-  .slider-nav {
-    width: 30px;
-    height: 30px;
-    font-size: 18px;
-  }
+
   .offer-card {
     grid-template-columns: 1fr;
+    gap: 0;
+    /* make the card a positioning context so buttons can
+       align to the image height, not the whole card */
+    position: relative;
+  }
+
+  .offer-card .offer-image {
+    position: relative;
+  }
+
+  .offer-card .offer-image img {
+    height: 240px;
+  }
+
+  .offer-card .offer-info {
+    padding: 24px 20px;
+  }
+
+  .offer-card .offer-info h3 {
+    font-size: 20px;
+    margin-bottom: 12px;
+  }
+
+  .offer-card .offer-info p {
+    font-size: 14px;
+    line-height: 1.7;
+    margin-bottom: 16px;
+  }
+
+  .slider-dots {
+    margin-top: 20px;
+    gap: 8px;
+  }
+}
+
+/* =========================================================
+   RESPONSIVE — Small phones (≤ 480px)
+   Buttons remain centered on the image (shrink size, keep position)
+   ========================================================= */
+@media (max-width: 480px) {
+  .offers-slider {
+    padding: 0 14px;
+  }
+
+  .slider-nav {
+    width: 32px;
+    height: 32px;
+    font-size: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .slider-nav.prev {
+    left: 6px;
+  }
+  .slider-nav.next {
+    right: 6px;
+  }
+
+  .offer-card {
+    grid-template-columns: 1fr;
+  }
+
+  .offer-card .offer-image img {
+    height: 200px;
+  }
+
+  .offer-card .offer-info {
+    padding: 20px 16px;
+  }
+
+  .offer-card .offer-info h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+
+  .offer-card .offer-info p {
+    font-size: 13px;
+    line-height: 1.65;
+    margin-bottom: 14px;
+  }
+
+  .slider-dot {
+    width: 7px;
+    height: 7px;
+  }
+
+  .slider-dot.active {
+    width: 20px;
+  }
+}
+
+/* =========================================================
+   RESPONSIVE — Landscape phones (short height)
+   ========================================================= */
+@media (max-height: 480px) and (max-width: 992px) {
+  .offer-card .offer-image img {
+    height: 180px;
+  }
+
+  .offer-card .offer-info {
+    padding: 16px;
+  }
+
+  .offer-card .offer-info h3 {
+    font-size: 18px;
+    margin-bottom: 8px;
+  }
+
+  .offer-card .offer-info p {
+    font-size: 13px;
+    line-height: 1.5;
+    margin-bottom: 12px;
+  }
+
+  .slider-dots {
+    margin-top: 12px;
+  }
+}
+
+/* =========================================================
+   TOUCH DEVICES — bigger tap targets for nav + dots
+   ========================================================= */
+@media (hover: none) and (pointer: coarse) {
+  .slider-dot {
+    position: relative;
+  }
+
+  .slider-dot::before {
+    content: '';
+    position: absolute;
+    inset: -8px;
+    border-radius: 50%;
+  }
+}
+
+/* =========================================================
+   ACCESSIBILITY — focus states
+   ========================================================= */
+.slider-nav:focus-visible,
+.slider-dot:focus-visible {
+  outline: 2px solid #1a1a1a;
+  outline-offset: 2px;
+}
+
+/* =========================================================
+   REDUCED MOTION — respect user preference
+   ========================================================= */
+@media (prefers-reduced-motion: reduce) {
+  .slider-nav,
+  .slider-dot,
+  .offer-card {
+    transition: none;
   }
 }
