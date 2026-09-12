@@ -1,58 +1,141 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { FiMenu, FiX, FiChevronDown } from 'react-icons/fi';
+import styles from './Header.module.css';
 
 const Header = () => {
   const { user, isAuthenticated, logout } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const [menuOpen, setMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
+  // Close menu on route change
+  useEffect(() => {
+    setMenuOpen(false);
+    setDropdownOpen(false);
+  }, [location.pathname]);
+
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? 'hidden' : '';
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [menuOpen]);
+
+  const toggleMenu = () => setMenuOpen((prev) => !prev);
+  const closeMenu = () => setMenuOpen(false);
+
   const handleBookNow = () => {
+    closeMenu();
     if (isAuthenticated) {
-      // Scroll to reservation widget or navigate to booking
-      document.querySelector('.reservation-widget')?.scrollIntoView({ behavior: 'smooth' });
+      document
+        .querySelector('.reservation-widget')
+        ?.scrollIntoView({ behavior: 'smooth' });
     } else {
       navigate('/login');
     }
   };
 
   const handleLogout = () => {
+    closeMenu();
+    setDropdownOpen(false);
     logout();
     navigate('/');
   };
 
+  const toggleDropdown = () => setDropdownOpen((prev) => !prev);
+
   return (
-    <header className="header">
-      <div className="container">
-        <Link to="/" className="logo">Veloura</Link>
-        <nav className="nav-links">
-          <Link to="/rooms">Rooms</Link>
-          <Link to="/offers">Offers</Link>
-          <Link to="/dining">Dining</Link>
-          <Link to="/amenities">Amenities</Link>
-          <Link to="/gallery">Gallery</Link>
-          <Link to="/attractions">Attractions</Link>
-          <Link to="/about">About</Link>
-          {isAuthenticated ? (
-            <div className="user-dropdown">
-              <button className="user-dropdown-btn">
-                👋 {user?.full_name || user?.email}
-              </button>
-              <div className="user-dropdown-content">
-                <Link to="/profile">My Profile</Link>
-                <button onClick={handleLogout} className="dropdown-logout">Logout</button>
+    <>
+      {/* Mobile backdrop */}
+      <div
+        className={`${styles.backdrop} ${menuOpen ? styles.backdropOpen : ''}`}
+        onClick={closeMenu}
+        aria-hidden="true"
+      />
+
+      <header className={styles.header}>
+        <div className={styles.container}>
+          <Link to="/" className={styles.logo} onClick={closeMenu}>
+            Veloura
+          </Link>
+
+          <nav
+            className={`${styles.navLinks} ${menuOpen ? styles.navLinksOpen : ''}`}
+          >
+            <Link to="/rooms" onClick={closeMenu}>Rooms</Link>
+            <Link to="/offers" onClick={closeMenu}>Offers</Link>
+            <Link to="/dining" onClick={closeMenu}>Dining</Link>
+            <Link to="/amenities" onClick={closeMenu}>Amenities</Link>
+            <Link to="/gallery" onClick={closeMenu}>Gallery</Link>
+            <Link to="/attractions" onClick={closeMenu}>Attractions</Link>
+            <Link to="/about" onClick={closeMenu}>About</Link>
+
+            {isAuthenticated ? (
+              <div className={styles.userDropdown}>
+                <button
+                  className={styles.userDropdownBtn}
+                  onClick={toggleDropdown}
+                  aria-expanded={dropdownOpen}
+                >
+                  <span>👋 {user?.full_name || user?.email}</span>
+                  <FiChevronDown
+                    className={`${styles.chevron} ${
+                      dropdownOpen ? styles.chevronOpen : ''
+                    }`}
+                  />
+                </button>
+
+                {dropdownOpen && (
+                  <div className={styles.userDropdownContent}>
+                    <Link to="/profile" onClick={closeMenu}>
+                      My Profile
+                    </Link>
+                    <button
+                      onClick={handleLogout}
+                      className={styles.dropdownLogout}
+                    >
+                      Logout
+                    </button>
+                  </div>
+                )}
               </div>
-            </div>
-          ) : (
-            <>
-              <Link to="/login" className="auth-link">Login</Link>
-              <Link to="/signup" className="auth-link signup-link">Sign Up</Link>
-            </>
-          )}
-          <button onClick={handleBookNow} className="book-btn">BOOK NOW</button>
-        </nav>
-      </div>
-    </header>
+            ) : (
+              <>
+                <Link to="/login" className={styles.authLink} onClick={closeMenu}>
+                  Login
+                </Link>
+                <Link
+                  to="/signup"
+                  className={`${styles.authLink} ${styles.signupLink}`}
+                  onClick={closeMenu}
+                >
+                  Sign Up
+                </Link>
+              </>
+            )}
+
+            <button onClick={handleBookNow} className={styles.bookBtn}>
+              BOOK NOW
+            </button>
+          </nav>
+
+          {/* Burger / Close icon */}
+          <button
+            className={styles.burger}
+            onClick={toggleMenu}
+            aria-label={menuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+            aria-expanded={menuOpen}
+          >
+            {menuOpen ? <FiX /> : <FiMenu />}
+          </button>
+        </div>
+      </header>
+    </>
   );
 };
 

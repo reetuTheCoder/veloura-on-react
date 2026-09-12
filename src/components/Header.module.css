@@ -1,0 +1,300 @@
+/* Header.module.css */
+
+.header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  z-index: 1000;
+  padding: 20px 0;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: 300;
+  letter-spacing: 2px;
+  text-decoration: none;
+  color: #1a1a1a;
+  z-index: 1100;
+}
+
+/* ---------- Desktop Nav ---------- */
+.navLinks {
+  display: flex;
+  gap: 30px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.navLinks a {
+  text-decoration: none;
+  color: #1a1a1a;
+  font-size: 14px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: color 0.3s;
+}
+
+.navLinks a:hover {
+  color: #b89b6b;
+}
+
+/* ---------- Burger / Close Icon ---------- */
+.burger {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  color: #1a1a1a;
+  font-size: 28px;
+  line-height: 1;
+  z-index: 1100;
+  transition: color 0.3s;
+}
+
+.burger:hover {
+  color: #b89b6b;
+}
+
+/* ---------- Book Now Button ---------- */
+.bookBtn {
+  background: #1a1a1a;
+  color: white;
+  padding: 10px 24px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: opacity 0.3s;
+}
+
+.bookBtn:hover {
+  opacity: 0.8;
+}
+
+/* ---------- User Dropdown ---------- */
+.userDropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.userDropdownBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  color: #1a1a1a;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 8px 12px;
+  transition: color 0.3s;
+}
+
+.userDropdownBtn:hover {
+  color: #b89b6b;
+}
+
+.chevron {
+  font-size: 16px;
+  transition: transform 0.3s ease;
+}
+
+.chevronOpen {
+  transform: rotate(180deg);
+}
+
+.userDropdownContent {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  background: white;
+  min-width: 180px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  border-radius: 4px;
+  padding: 8px 0;
+  margin-top: 4px;
+}
+
+.userDropdownContent a,
+.userDropdownContent button {
+  display: block;
+  padding: 8px 20px;
+  color: #333;
+  text-decoration: none;
+  background: none;
+  border: none;
+  width: 100%;
+  text-align: left;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.userDropdownContent a:hover,
+.userDropdownContent button:hover {
+  background: #f5f5f5;
+  color: #b89b6b;
+}
+
+.dropdownLogout {
+  color: #dc3545 !important;
+}
+
+/* ---------- Auth Links ---------- */
+.authLink {
+  color: #1a1a1a;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.authLink:hover {
+  color: #b89b6b;
+}
+
+.signupLink {
+  background: #1a1a1a;
+  color: white !important;
+  padding: 8px 16px;
+  border-radius: 4px;
+  transition: opacity 0.3s;
+}
+
+.signupLink:hover {
+  opacity: 0.85;
+  color: white !important;
+}
+
+/* ---------- Mobile (≤ 992px) ---------- */
+@media (max-width: 992px) {
+  .burger {
+    display: inline-flex;
+  }
+
+  .navLinks {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: 280px;
+    max-width: 80vw;
+    background: #ffffff;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    padding: 90px 24px 24px;
+    box-shadow: -8px 0 24px rgba(0, 0, 0, 0.12);
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    overflow-y: auto;
+    flex-wrap: nowrap;
+  }
+
+  .navLinksOpen {
+    transform: translateX(0);
+  }
+
+  .navLinks a {
+    width: 100%;
+    padding: 14px 0;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 14px;
+  }
+
+  .navLinks a:last-of-type {
+    border-bottom: none;
+  }
+
+  .bookBtn,
+  .userDropdown,
+  .userDropdownBtn {
+    width: 100%;
+  }
+
+  .bookBtn {
+    margin-top: 16px;
+    padding: 14px 24px;
+    text-align: center;
+  }
+
+  .userDropdown {
+    margin-top: 8px;
+  }
+
+  .userDropdownBtn {
+    justify-content: space-between;
+    padding: 14px 0;
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  .userDropdownContent {
+    position: static;
+    box-shadow: none;
+    padding: 0;
+    margin: 0;
+    border-radius: 0;
+    background: #fafafa;
+  }
+
+  .userDropdownContent a,
+  .userDropdownContent button {
+    padding: 12px 16px;
+    border-bottom: 1px solid #eee;
+  }
+
+  .signupLink,
+  .authLink {
+    display: block;
+    width: 100%;
+    padding: 14px 0;
+    text-align: left;
+    border-radius: 0;
+    background: transparent;
+    color: #1a1a1a !important;
+    border-bottom: 1px solid #f0f0f0;
+  }
+}
+
+/* ---------- Backdrop overlay ---------- */
+.backdrop {
+  display: none;
+}
+
+@media (max-width: 992px) {
+  .backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+
+  .backdropOpen {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
