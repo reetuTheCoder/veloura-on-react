@@ -7,7 +7,7 @@ export const useChatbot = () => {
   useEffect(() => {
     // Check if magicchat_io is available
     const checkReady = setInterval(() => {
-      if (window.magicchat_io) {
+      if (window.sageion_os) {
         setIsReady(true);
         clearInterval(checkReady);
       }
@@ -17,8 +17,8 @@ export const useChatbot = () => {
   }, []);
 
   const openChat = () => {
-    if (window.magicchat_io?.open) {
-      window.magicchat_io.open();
+    if (window.sageion_os?.open) {
+      window.sageion_os.open();
       setIsOpen(true);
     } else {
       console.warn('Chatbot not ready');
@@ -26,8 +26,8 @@ export const useChatbot = () => {
   };
 
   const closeChat = () => {
-    if (window.magicchat_io?.close) {
-      window.magicchat_io.close();
+    if (window.sageion_os?.close) {
+      window.sageion_os.close();
       setIsOpen(false);
     }
   };

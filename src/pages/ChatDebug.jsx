@@ -11,10 +11,10 @@ const ChatDebug = () => {
     setLoading(true);
     try {
       const isInit = magicChatService.isInitialized();
-      const hasMagicChat = !!window.magicchat_io;
+      const hasMagicChat = !!window.sageion_os;
       setStatus(`
         MagicChat Initialized: ${isInit ? '✅ Yes' : '❌ No'}
-        window.magicchat_io exists: ${hasMagicChat ? '✅ Yes' : '❌ No'}
+        window.sageion_os exists: ${hasMagicChat ? '✅ Yes' : '❌ No'}
         User authenticated: ${isAuthenticated ? '✅ Yes' : '❌ No'}
         User ID: ${user?.id || 'Not logged in'}
       `);

@@ -9,8 +9,8 @@ const MagicChatWrapper = ({ children }) => {
   // Handle user login/logout for MagicChat
   useEffect(() => {
     const handleLogout = () => {
-      if (window.magicchat_io?.logout) {
-        window.magicchat_io.logout();
+      if (window.sageion_os?.logout) {
+        window.sageion_os.logout();
       }
     };
 
