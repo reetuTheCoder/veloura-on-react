@@ -1,24 +1,28 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
-import '../styles/Auth.css';
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+import "../styles/Auth.css";
 
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const { login } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
+    setError("");
     setLoading(true);
 
     const result = await login(email, password);
     if (result.success) {
-      navigate('/');
+      // No need to call sageionLogin() anymore — AuthContext.user
+      // changed, which triggers the reactive `useSageionUserSync`
+      // effect in App.jsx. The SDK re-initializes with the new uid
+      // automatically.
+      navigate("/");
     } else {
       setError(result.error);
     }
@@ -52,7 +56,7 @@ const Login = () => {
           </div>
           {error && <div className="auth-error">{error}</div>}
           <button type="submit" className="auth-btn" disabled={loading}>
-            {loading ? 'Logging in...' : 'Login'}
+            {loading ? "Logging in..." : "Login"}
           </button>
         </form>
         <div className="auth-footer">
